@@ -1,3 +1,4 @@
+
 # E-Bookstore Database Design
 
 ## Duties Assigned
@@ -162,6 +163,29 @@ FROM Purchases
 WHERE Purchase_Date > NOW() - INTERVAL '10 years'
 GROUP BY Buyer_name
 HAVING SUM(Total_Price) > 10;
+
+-- Inserting 10 entries into Feedbacks table
+
+INSERT INTO Feedbacks (Buyer_Id, Book_Id, Feedback_Date, Rating, Comment)
+VALUES
+(1, 1, '2024-06-30', 5.0, 'Excellent read, adore the characters!'),
+(2, 3, '2024-06-29', 3.8, 'The storyline had unexpected twists, although the pace was a little sluggish.'),
+(3, 2, '2024-06-28', 2.2, 'Couldn't stop reading, really enjoyed & would recommend!'),
+(1, 4, '2024-06-27', 2.0, 'Amazing narrative, captivated me until the conclusion.'),
+(2, 5, '2024-06-26', 5.0, 'Enjoyable read, but I was anticipating more plot twists.'),
+(3, 1, '2024-06-25', 3.7, 'One of the best books I have read in this year'),
+(1, 3, '2024-06-24', 2.3, 'Engaging and well-written by the Author.'),
+(2, 4, '2024-06-23', 2.9, 'Appreciated the growth of the characters.'),
+(3, 5, '2024-06-10', 4.5, 'Decent book, just not in my preferred genre.'),
+(1, 2, '2024-06-11', 5.0, 'Sci-Fi & Action storyline, ideal for fans of suspenseful movies.');
+
+-- Verify by selecting the 10 most recent feedbacks
+SELECT f.Feedback_Id, f.Comment, f.Feedback_Date, b.Name AS Buyer_Name, bk.Title AS Book_Title
+FROM Feedbacks f
+JOIN Buyers b ON f.Buyer_Id = b.Buyer_Id
+JOIN Books bk ON f.Book_Id = bk.Book_Id
+ORDER BY f.Feedback_Date DESC
+LIMIT 10;
 
 ##WELL REVIEWED BOOKS
 SELECT Book_name, Title, Rating
